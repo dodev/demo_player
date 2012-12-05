@@ -32,7 +32,7 @@ function QsortDemo (arr, containerId) {
 	this.playInterval = 500;
 	this.screenplay = [];
 	this.currentScene = 0;
-	this.barsXOffset = [];
+	this.animationFinished = false;
 
 	this.colorBasic = 'grey';
 	this.colorPivot = 'green';
@@ -46,7 +46,10 @@ QsortDemo.prototype = {
 	// quick sort implementation
 	//
 	sort: function () {
-		this.notUserFriendlySort (0, this.items.length - 1);
+		this.screenplay = [];
+		this.currentScene = 0;
+		if (this.sorted == false)
+			this.notUserFriendlySort (0, this.items.length - 1);
 		this.sorted = true;
 		this.screenplay.push ('finish');
 	},
@@ -110,31 +113,32 @@ QsortDemo.prototype = {
 		this.animation = new Kinetic.Animation (animationIter, this.mainLayer);
 		this.animation.caller = this;
 		this.animation.buf = {};
+		this.animationFinished = false;
 	},
 	
 	initControls: function () {		
 		var controlDiv = document.createElement ('div');
 
 		var startButton = document.createElement ('button');
-		startButton.innerText = 'Start';
+		startButton.textContent = 'Start';
 		startButton.creator = this;
 		startButton.onclick = this.startButtonClick;
 		controlDiv.appendChild (startButton);
 
 		var pauseButton = document.createElement ('button');
-		pauseButton.innerText = 'Pause';
+		pauseButton.textContent = 'Pause';
 		pauseButton.creator = this;
 		pauseButton.onclick = this.pauseButtonClick;
 		controlDiv.appendChild (pauseButton);
 
 		var stopButton = document.createElement ('button');
-		stopButton.innerText = 'Stop/Reset';
+		stopButton.textContent = 'Stop/Reset';
 		stopButton.creator = this;
 		stopButton.onclick = this.stopButtonClick;
 		controlDiv.appendChild (stopButton);
 
 		var intervalLabel = document.createElement ('span');
-		intervalLabel.innerText = 'Play interval(ms):';
+		intervalLabel.textContent = 'Play interval(ms):';
 		controlDiv.appendChild (intervalLabel);
 		
 		var intervalSelect = document.createElement ('select');
@@ -174,25 +178,32 @@ QsortDemo.prototype = {
 	intervalSelectChange: function () {
 		this.creator.playInterval = parseInt (this.options[this.selectedIndex].value);
 	},
+	//
+	// end of handlers
+	//
 
 	initCanvas: function () {
-		this.stage = new Kinetic.Stage (
-			{ 	container: this.containerId,
-				width: this.stageWidth, 
-				height: this.stageHeight	}
-			);
+		// init the stage
+		this.stage = new Kinetic.Stage ({
+			container: this.containerId,
+			width: this.stageWidth, 
+			height: this.stageHeight
+		});
+		
 		this.mainLayer = new Kinetic.Layer ();
 
+		// initializing the major areas on the canvass
 		this.addBarsArea (this.mainLayer);
 		this.addStatusArea (this.mainLayer);
 		this.stage.add (this.mainLayer);
 		
-		// add a legend
+		// add a legend layer, which won't change on reset
+		// the items in it are pretty static
 		var legendLayer = new Kinetic.Layer ();
 		this.addLegendArea (legendLayer);
 		this.stage.add (legendLayer);
-
 		
+		// init the animation object
 		this.animation = new Kinetic.Animation (animationIter, this.mainLayer);
 		this.animation.caller = this;
 		this.animation.buf = {};
@@ -218,7 +229,6 @@ QsortDemo.prototype = {
 				} );
 			layer.add (this.barItems[i]);
 
-			this.barsXOffset[i] = xoffset;
 			xoffset += 2*this.barWidth;
 		}
 	},
@@ -390,8 +400,11 @@ QsortDemo.prototype = {
 	},
 
 	play: function (interval) {
-		if (this.sorted == false)
+		if (!this.sorted)
 			this.sort ();
+
+		if (this.animationFinished)
+			return;
 
 		if (interval != undefined)
 			this.playInterval = interval;
@@ -421,11 +434,14 @@ var animationIter = function (frame) {
 		// reached the end of the screenplay
 		// stop the animation
 		this.caller.currentScene = 0;
+		this.caller.animationFinished = true;
 		this.stop ();
 		return;
 	}
-
+	// parse the scene and the arguments
 	var args = this.caller.screenplay[this.caller.currentScene].split(',');
+
+	// echo the operation to the stat area
 	this.caller.statValOperation.setText (args.toString ());
 	switch (args[0]) {
 		case 'swap':
@@ -446,15 +462,16 @@ var animationIter = function (frame) {
 		break;
 
 		case 'pivot': 
-			this.buf.currPivot = args[1];
+			this.buf.currPivot = parseInt (args[1]);
 		break;
 
 		case 'toswap':
-			this.buf.toSwap = [args[1],args[2]]
+			this.buf.toSwap = [parseInt(args[1]),parseInt(args[2])];
 		break;
 
 		case 'range':
-			this.buf.range = [args[1],args[2]]
+			this.buf.range = [parseInt(args[1]),parseInt(args[2])];
+			this.buf.currPivot = null;
 		break;
 
 		case 'finish':
@@ -486,7 +503,7 @@ var refreshBars = function (demo, buf) {
 			demo.barItems[i].setFill (demo.colorRange);
 	}
 
-	if (buf.currPivot != undefined)
+	if (buf.currPivot != undefined && buf.currPivot != null)
 		demo.barItems[buf.currPivot].setFill (demo.colorPivot);
 
 	if (buf.toSwap != undefined && buf.toSwap != null) {
