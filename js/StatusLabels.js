@@ -1,0 +1,11 @@
+var StatusLabels = {
+	status:		0x1,
+	name:	 	0x2,
+	swaps:	 	0x4,
+	iterations: 	0x8,
+	elements: 	0x10,
+	operation:	0x20,
+	_2: 		0x40,
+	_3:	 	0x80
+};
+
