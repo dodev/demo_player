@@ -61,7 +61,7 @@ QsortDemo.prototype = {
 			pIndex = this.partition (left, right);
 			this.notUserFriendlySort (left, pIndex);
 			this.recursiveCalls++;
-			this.notUserFriendlySort (pIndex+1, right);
+			this.notUserFriendlySort (pIndex + 1, right);
 			this.recursiveCalls++;
 		}
 	},
@@ -75,7 +75,7 @@ QsortDemo.prototype = {
 		this.screenplay.push ('pivot,'+pIdx);
 		var buf = 0;
 
-		while (i < j) {
+		while (i < j ) {
 			while (pivot > this.items[i]) i++;
 			while (pivot < this.items[j]) j--;
 
@@ -93,6 +93,63 @@ QsortDemo.prototype = {
 
 		return j;
 	},
+
+	iterativeQuickSort: function () {
+		var left, right, i, j,
+		pIndex, pivot, buf,
+		stack = [];
+		stack.push ([0, this.items.length-1]);
+
+		while (stack.length > 0) {
+			buf = stack.pop ();
+			left = buf[0];
+			right = buf[1];
+
+			while (left < right) {
+				this.screenplay.push ('range,'+left+','+right);
+				pIndex = Math.floor ((left + right) / 2);
+				this.screenplay.push ('pivot,'+pIndex);
+				pivot = this.items[pIndex];
+				i = left;
+				j = right;
+
+				while (i <= j) {
+					while (pivot > this.items[i]) i++;
+					while (pivot < this.items[j]) j--;
+
+					if (i <= j) {
+						if (this.items[i] != this.items[j]) {
+							this.screenplay.push ('toswap,'+i+','+j);
+							buf = this.items[i];
+							this.items[i] = this.items[j];
+							this.items[j] = buf;
+							this.screenplay.push ('swap,'+i+','+j);
+							this.swaps++;
+						}
+						i++;
+						j--;
+					}
+				}
+				if (j - left < right - i) {
+					if (i < right)
+						stack.push ([i, right]);
+					right = j;
+				} else {
+					if (left < j)
+						stack.push ([left, j]);
+					left = i;
+				}
+			
+				/*if (i < right)
+					stack.push ([i, right]);
+
+				right = j;*/
+			}
+		}
+
+		this.screenplay.push ('finish');
+	},
+
 	//
 	// end of quick sort implementation
 	//
@@ -154,6 +211,12 @@ QsortDemo.prototype = {
 		intervalSelect.appendChild (optionBuf);
 		optionBuf = document.createElement ('option');
 		optionBuf.innerHTML = '200';
+		intervalSelect.appendChild (optionBuf);
+		optionBuf = document.createElement ('option');
+		optionBuf.innerHTML = '100';
+		intervalSelect.appendChild (optionBuf);
+		optionBuf = document.createElement ('option');
+		optionBuf.innerHTML = '50';
 		intervalSelect.appendChild (optionBuf);
 		intervalSelect.creator = this;
 		intervalSelect.onchange = this.intervalSelectChange;
@@ -401,7 +464,7 @@ QsortDemo.prototype = {
 
 	play: function (interval) {
 		if (!this.sorted)
-			this.sort ();
+			this.iterativeQuickSort ();
 
 		if (this.animationFinished)
 			return;
@@ -466,7 +529,14 @@ var animationIter = function (frame) {
 		break;
 
 		case 'toswap':
-			this.buf.toSwap = [parseInt(args[1]),parseInt(args[2])];
+			var arg1 = parseInt (args[1]);
+			var arg2 = parseInt (args[2]);
+			if (this.buf.currPivot == arg1)
+				this.buf.currPivot = arg2;
+			else if (this.buf.currPivot == arg2)
+				this.buf.currPivot = arg1;
+				
+			this.buf.toSwap = [arg1, arg2];
 		break;
 
 		case 'range':
