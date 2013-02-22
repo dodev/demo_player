@@ -26,6 +26,9 @@ function DemoPlayer (alg, containerId, width, height) {
 	this.colorDifferent = 'red';
 	this.colorRange = 'lawngreen';
 	this.colorFinish = 'yellowgreen';
+
+	this.timer = null;
+	this.currentlyPlaying = false;
 }
 
 DemoPlayer.prototype = {
@@ -136,7 +139,17 @@ DemoPlayer.prototype = {
 		this.creator.stop ();
 	},
 	intervalSelectChange: function () {
-		this.creator.playInterval = parseInt (this.options[this.selectedIndex].value);
+		this.creator.setPlayInterval (parseInt (this.options[this.selectedIndex].value));
+	},
+	setPlayInterval: function (interval) {
+		if (typeof interval == 'undefined')
+			return;
+
+		this.playInterval = interval;
+		if (this.currentlyPlaying) {
+			this.pause ();
+			this.play ();
+		}
 	},
 
 	//
@@ -209,32 +222,48 @@ DemoPlayer.prototype = {
 		if (interval != undefined)
 			this.playInterval = interval;
 
-		this.animation.past = 0;	
-		this.animation.start ();	
+		//this.animation.past = 0;	
+		//this.animation.start ();
+		var player = this;
+		this.timer = setInterval (function () {
+				player.animation.start ();
+				player.animation.stop ();
+			}, 
+			this.playInterval);
+		this.currentlyPlaying = true;
+	},
+
+	animationWorker: function () {
+		this.animation.start ();
+		this.animation.stop ()
 	},
 
 	stop: function () {
+		clearInterval(this.timer);
 		this.animation.stop ();
 		this.reset ();
+		this.currentlyPlaying = false;
 	},
 
 	pause: function () {
+		clearInterval(this.timer);
 		this.animation.stop ();
+		this.currentlyPlaying = false;
 	}
 };
 
 var animationIter = function (frame) {
-	if (frame.time - this.past < this.caller.playInterval)
+	/*if (frame.time - this.past < this.caller.playInterval)
 		return;
 	
-	this.past = frame.time;
+	this.past = frame.time;*/
 
 	if (this.caller.screenplay.length-1 < this.caller.currentScene) {
 		// reached the end of the screenplay
 		// stop the animation
+		this.caller.pause ();
 		this.caller.currentScene = 0;
 		this.caller.animationFinished = true;
-		this.stop ();
 		return;
 	}
 

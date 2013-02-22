@@ -102,3 +102,4 @@ BubbleSortDemo.prototype.reset = function () {
 BubbleSortDemo.prototype.getLabels = function () {
 	return this.labels;
 };
+

@@ -1,15 +1,4 @@
-/*var demoArr = [
-	new QsortDemo ([2, 12, 7, 4, 5, 10], 'example0'),
-	new QsortDemo ([2, 12, 7, 4, 5, 10, 8, 3, 9, 11, 6], 'example1'),
-	new QsortDemo ([7, 5, 21, 8, 4, 2, 9, 1, 3, 12, 5, 7, 13, 14, 6, 4, 17, 2, 8, 16, 5], 'example2')
-];
-*/
 window.onload = function () {
-/*	for (var i = 0; i< demoArr.length; i++) {
-		demoArr[i].initCanvas ();
-		demoArr[i].initControls ();
-	}
-*/
 	document.getElementById ('fight_button').onclick = fightButtonClick;
 };
 
@@ -32,7 +21,8 @@ var fightButtonClick = function () {
 		qPlayer.init ();
 		bPlayer.init ();
 		document.getElementById ('start_all').onclick = function () {
-			qPlayer.play (); bPlayer.play ();
+			setTimeout(function () {  qPlayer.play(); }, 1);
+			setTimeout(function () {  bPlayer.play (); }, 20);
 		};
 		document.getElementById ('pause_all').onclick = function () {
 			qPlayer.pause (); bPlayer.pause ();
@@ -42,8 +32,8 @@ var fightButtonClick = function () {
 		};
 		document.getElementById ('interval_select').onchange = function () {
 			var interval = parseInt (this.value);
-			qPlayer.playInterval = interval;
-			bPlayer.playInterval = interval;
+			setTimeout (function () { qPlayer.setPlayInterval(interval) }, 1);
+			setTimeout (function () { bPlayer.setPlayInterval(interval) }, 20);
 
 		};
 
