@@ -141,16 +141,6 @@ DemoPlayer.prototype = {
 	intervalSelectChange: function () {
 		this.creator.setPlayInterval (parseInt (this.options[this.selectedIndex].value));
 	},
-	setPlayInterval: function (interval) {
-		if (typeof interval == 'undefined')
-			return;
-
-		this.playInterval = interval;
-		if (this.currentlyPlaying) {
-			this.pause ();
-			this.play ();
-		}
-	},
 
 	//
 	// end of handlers
@@ -209,6 +199,17 @@ DemoPlayer.prototype = {
 		}
 	},
 
+	setPlayInterval: function (interval) {
+		if (typeof interval == 'undefined')
+			return;
+
+		this.playInterval = interval;
+		if (this.currentlyPlaying) {
+			this.pause ();
+			this.play ();
+		}
+	},
+
 	setLabel: function (name, value) {
 		if (this.labels.hasOwnProperty (name))
 			this.labels[name].setText (value);
@@ -222,8 +223,6 @@ DemoPlayer.prototype = {
 		if (interval != undefined)
 			this.playInterval = interval;
 
-		//this.animation.past = 0;	
-		//this.animation.start ();
 		var player = this;
 		this.timer = setInterval (function () {
 				player.animation.start ();
@@ -232,12 +231,7 @@ DemoPlayer.prototype = {
 			this.playInterval);
 		this.currentlyPlaying = true;
 	},
-
-	animationWorker: function () {
-		this.animation.start ();
-		this.animation.stop ()
-	},
-
+	
 	stop: function () {
 		clearInterval(this.timer);
 		this.animation.stop ();
@@ -253,10 +247,6 @@ DemoPlayer.prototype = {
 };
 
 var animationIter = function (frame) {
-	/*if (frame.time - this.past < this.caller.playInterval)
-		return;
-	
-	this.past = frame.time;*/
 
 	if (this.caller.screenplay.length-1 < this.caller.currentScene) {
 		// reached the end of the screenplay

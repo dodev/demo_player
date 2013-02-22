@@ -21,7 +21,9 @@ var fightButtonClick = function () {
 		qPlayer.init ();
 		bPlayer.init ();
 		document.getElementById ('start_all').onclick = function () {
-			setTimeout(function () {  qPlayer.play(); }, 1);
+			if (qPlayer.currentlyPlaying || bPlayer.currentlyPlaying)
+					return ;
+			setTimeout(function () {  qPlayer.play(); }, 10);
 			setTimeout(function () {  bPlayer.play (); }, 20);
 		};
 		document.getElementById ('pause_all').onclick = function () {
@@ -32,8 +34,8 @@ var fightButtonClick = function () {
 		};
 		document.getElementById ('interval_select').onchange = function () {
 			var interval = parseInt (this.value);
-			setTimeout (function () { qPlayer.setPlayInterval(interval) }, 1);
-			setTimeout (function () { bPlayer.setPlayInterval(interval) }, 20);
+			setTimeout (function () { qPlayer.setPlayInterval(interval) }, 10);
+			setTimeout (function () { bPlayer.setPlayInterval(interval) }, 50);
 
 		};
 
