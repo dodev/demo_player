@@ -24,6 +24,13 @@ var fightButtonClick = function () {
 		case 'bsort':
 			demo = new BubbleSortDemo (rndArr);
 		break;
+		case 'bsearch':
+			// the array must be sorted
+			rndArr.sort (function (a,b) {return a-b;});
+			// and a random value to look for
+			var prei = Math.round (Math.random() * num);
+			demo = new BinSearchDemo (rndArr, prei);
+		break;
 		default:
 			throw new Exception ("Unrecognized demo selected");
 		break;
