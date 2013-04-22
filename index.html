@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Demo of Hoor's Quick sort algorithm</title>
+		<title>Algorithm demo player</title>
 		<script type="text/javascript" src="js/kinetic-v4.1.2.min.js"></script>
 		<script type="text/javascript" src="js/DemoAlgorithm.js"></script>
 		<script type="text/javascript" src="js/DemoPlayer.js"></script>
@@ -15,35 +15,24 @@
 			#red_corner {margin-right: 150px; }
 			#arena {width: 100%; height: 100%; overflow: auto;}
 			#controls_room {clear: left; }
-			#inner_container { width: 350px; margin: 0 auto; padding-top: 20px;}
+			#inner_container { width: 400px; margin: 0 auto; padding-top: 20px;}
 		</style>
 	</head>
 	<body>
-		<h1>QSORT VS THE_WORLD</h1>
+		<h1>Algorithm demo player</h1>
 		<div id="init_input_block">
+			Choose an algorithm to demonstrate
+			<select id="algorithm_select">
+				<option value="qsort">QuickSort</option>
+				<option value="bsort">BubleSort</option>
+			</select>
 			Choose the number of elements in each array <input type="text" id="number_of_elements" size="4" />;
-			Choose the opponent <select id="opponent"><option value="0" selected="selected">-</option><option value="1">bubble sort</option></select>;
-			<button id="fight_button">FIGHT!</button>
+			<button id="fight_button">GO!</button>
 		</div>
 		<div id="selfdistruct_link">
-			<a href=".">FLUSH IT ALL AWAY!</a>
+			<a href="./index.html">FLUSH IT ALL AWAY!</a>
 		</div>
 		<div id="arena">
-			<div id="red_corner"></div>
-			<div id="blue_corner"></div>
-			<div id="controls_room">
-				<div id="inner_container">
-					<button type="button" id="start_all">START</button>
-					<button type="button" id="pause_all">PAUSE</button>
-					<button type="button" id="stop_all">STOP</button>
-					Interval (ms) <select id="interval_select">
-						<option>1000</option>
-						<option>500</option>
-						<option>100</option>
-						<option>50</option>
-						</select>
-				</div>
-			</div>
 		</div>
 	</body>
 </html>

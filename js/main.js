@@ -8,36 +8,29 @@ var fightButtonClick = function () {
 		if (num == null || isNaN (num))
 			throw "Enter a number in the 'Number of elements' field!'";
 		if  (num < 0 || num > 200)
-			throw "The number of elements must be in the range of (0;50)!";
-
-		// TODO: add opponent input parsing
+			throw "The number of elements must be in the range of (0;200)!";
 
 		var rndArr = genRndArr (num);
 
-		var qsortDemo = new QsortDemo (rndArr);
-		var qPlayer = new DemoPlayer (qsortDemo, 'red_corner', 700, 550);
-		var bsortDemo = new BubbleSortDemo (rndArr);
-		var bPlayer = new DemoPlayer (bsortDemo, 'blue_corner', 700, 550);
-		qPlayer.init ();
-		bPlayer.init ();
-		document.getElementById ('start_all').onclick = function () {
-			if (qPlayer.currentlyPlaying || bPlayer.currentlyPlaying)
-					return ;
-			setTimeout(function () {  qPlayer.play(); }, 10);
-			setTimeout(function () {  bPlayer.play (); }, 20);
-		};
-		document.getElementById ('pause_all').onclick = function () {
-			qPlayer.pause (); bPlayer.pause ();
-		};
-		document.getElementById ('stop_all').onclick = function () {
-			qPlayer.stop (); bPlayer.stop ();
-		};
-		document.getElementById ('interval_select').onchange = function () {
-			var interval = parseInt (this.value);
-			setTimeout (function () { qPlayer.setPlayInterval(interval) }, 10);
-			setTimeout (function () { bPlayer.setPlayInterval(interval) }, 50);
+		var algSel = document.getElementById ('algorithm_select');
 
-		};
+		var demoName = algSel.options[algSel.selectedIndex].value;
+		var demo = null;
+
+		switch (demoName) {
+		case 'qsort':
+			demo = new QsortDemo (rndArr);
+		break;
+		case 'bsort':
+			demo = new BubbleSortDemo (rndArr);
+		break;
+		default:
+			throw new Exception ("Unrecognized demo selected");
+		break;
+		}
+
+		var demoPlayer = new DemoPlayer (demo, 'arena', 700, 550);
+		demoPlayer.init ();
 
 	} catch (e) {
 		window.alert ('ERROR: '+e.toString ());
