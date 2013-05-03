@@ -132,7 +132,7 @@ QsortDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Not in sorting',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -149,7 +149,7 @@ QsortDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Current range',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -166,7 +166,7 @@ QsortDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Current pivot',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -183,7 +183,7 @@ QsortDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'To be swapped',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -200,7 +200,7 @@ QsortDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Array sorted',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));

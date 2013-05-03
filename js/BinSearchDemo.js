@@ -65,7 +65,7 @@ BinSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Out of range',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -82,7 +82,7 @@ BinSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Current range',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -99,7 +99,7 @@ BinSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Item to be found',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -116,7 +116,7 @@ BinSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Currently checking',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -133,7 +133,7 @@ BinSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Not found',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -150,7 +150,7 @@ BinSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Found',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));

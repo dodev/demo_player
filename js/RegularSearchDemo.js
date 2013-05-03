@@ -53,7 +53,7 @@ RegularSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Not reached',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -70,7 +70,7 @@ RegularSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Checked',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -87,7 +87,7 @@ RegularSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Item to be found',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -104,7 +104,7 @@ RegularSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Currently checking',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -121,7 +121,7 @@ RegularSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Not found',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));
@@ -138,7 +138,7 @@ RegularSearchDemo.prototype.addAgendaArea = function (legendLayer, player) {
 			text: 'Found',
 			fontSize: player.fontSize,
 			fontFamily: 'Courier New',
-			textFill: 'black',
+			fill: 'black',
 			x: yStep + 5,
 			y: yOffset
 		}));

@@ -196,7 +196,7 @@ DemoPlayer.prototype = {
 				text: lblName + ':',
 				fontSize: this.fontSize,
 				fontFamily: this.fontFamily,
-				textFill: 'black',
+				fill: 'black',
 				x: this.statLabelsX,
 				y: yOffset
 			}));
@@ -204,7 +204,7 @@ DemoPlayer.prototype = {
 				text: this.labelDefault,
 				fontSize: this.fontSize,
 				fontFamily: this.fontFamily,
-				textFill: 'black',
+				fill: 'black',
 				x: this.statValuesX,
 				y: yOffset
 			});
