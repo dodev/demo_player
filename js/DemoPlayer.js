@@ -1,3 +1,8 @@
+// the player will be singleton for now
+// kineticjs doesn't allow more arguments to be passed to the
+// animation callback function, so this global will be used
+var _DemoPlayer = null;
+
 function DemoPlayer (alg, containerId, width, height) {
 	if (!alg instanceof DemoAlgorithm)
 		throw 'Error: the player requires an instence of a DemoAlgorithm to build the animation.';
@@ -33,6 +38,14 @@ function DemoPlayer (alg, containerId, width, height) {
 
 DemoPlayer.prototype = {
 	init: function () {
+		if (_DemoPlayer != null) {
+			// make sure there are no other player containers
+			var container = document.getElementById (this.containerId);
+			while (container.firstChild) {
+				container.removeChild (container.firstChild);
+			}
+		}
+
 		// init the stage
 		this.stage = new Kinetic.Stage ({
 			container: this.containerId,
@@ -65,6 +78,7 @@ DemoPlayer.prototype = {
 		this.animation.buf = {};
 
 		this.initControls ();
+		_DemoPlayer = this;
 	},
 
 	reset: function () {
@@ -247,6 +261,11 @@ DemoPlayer.prototype = {
 };
 
 var animationIter = function (frame) {
+	// this function is no more in the Kinetic.Animation closure
+	// so there is no way to pass local variables
+	// for now this hacky solution will be used
+	this.caller = _DemoPlayer; 
+	this.buf = _DemoPlayer.animation.buf;
 
 	if (this.caller.screenplay.length-1 < this.caller.currentScene) {
 		// reached the end of the screenplay
